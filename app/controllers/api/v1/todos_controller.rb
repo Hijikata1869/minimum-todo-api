@@ -10,7 +10,7 @@ module Api
       end
 
       def create
-        new_todo = Todo.new(post_params)
+        new_todo = Todo.new(todo: post_params[:todo])
         if new_todo.save
           render json: {
             message: "TODOを作成しました"
@@ -37,7 +37,7 @@ module Api
 
       private
       def post_params
-        params.require(:post).permit(:todo)
+        params.permit(:todo)
       end
     end
   end
