@@ -1,4 +1,4 @@
 class Todo < ApplicationRecord
-  validates :name, presence: true
-  validates :name, length: { maximum: 50 }
+  validates :todo, presence: true
+  validates :todo, length: { maximum: 50 }
 end
