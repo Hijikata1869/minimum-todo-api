@@ -10,9 +10,10 @@ module Api
       end
 
       def create
-        new_todo = Todo.new(todo: post_params[:todo])
-        if new_todo.save
+        @new_todo = Todo.new(todo: post_params[:todo])
+        if @new_todo.save
           render json: {
+            createdTodo: @new_todo,
             message: "TODOを作成しました"
           }, status: :ok
         else
@@ -23,8 +24,8 @@ module Api
       end
 
       def destroy
-        todo = Todo.find(params[:id])
-        if todo.destroy
+        @todo = Todo.find(params[:id])
+        if @todo.destroy
           render json: {
             message: "TODOを削除しました"
           }, status: :ok
@@ -33,6 +34,12 @@ module Api
             message: "TODOを削除できませんでした"
           }, status: :unprocessable_entity
         end
+      end
+
+      def toggle_completed
+        @todo = Todo.find(params[:id])
+        @todo.update(completed: !@todo.completed)
+        render json: @todo
       end
 
       private
